@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   currentProducts,
   getCurrentProductAsync,
+  getProducts,
+  products,
 } from "../redux/slice/ReduxSlice";
 import { useParams } from "react-router-dom";
 
@@ -10,9 +12,13 @@ const ProductPage = () => {
   const { productid } = useParams();
   const dispatch = useDispatch();
   const product = useSelector(currentProducts);
+  // const currentProduct = useSelector(currentProducts);
   useEffect(() => {
+    dispatch(getProducts());
     dispatch(getCurrentProductAsync(productid));
   }, [dispatch]);
+
+  console.log(product);
   if (product == "" || product == null) {
     return <div>Loading...</div>;
   } else {

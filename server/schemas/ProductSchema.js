@@ -14,6 +14,9 @@ const ProductSchema = new Schema({
   img: {
     data: String,
   },
+  productNumber: {
+    type: Number,
+  },
   guaranty: {
     type: String,
     required: true,

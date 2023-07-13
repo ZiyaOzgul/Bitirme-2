@@ -32,7 +32,6 @@ export const getCurrentProductAsync = createAsyncThunk(
   "/store/getCurrentProductAsync",
   async (id) => {
     const req = await axios.get(`http://localhost:3001/currentProducts/${id}`);
-
     return req.data;
   }
 );

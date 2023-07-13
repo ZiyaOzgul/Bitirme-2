@@ -56,6 +56,7 @@ app.post("/products", upload.single("productImg"), (req, res) => {
       data: img,
       contentType: "image/png",
     },
+    productNumber: req.body.productNumber,
     guaranty: req.body.guaranty,
     price: req.body.price,
     buyDate: req.body.buyDate,
@@ -71,12 +72,13 @@ app.post("/products", upload.single("productImg"), (req, res) => {
     });
 });
 
-app.get("/currentProducts/:productID", (req, res) => {
-  const productID = req.params.productID;
-  const index = ProductSchema.findById(productID);
+app.get("/currentProducts/:productNumber", (req, res) => {
+  const productNumber = req.params.productNumber;
+  const index = ProductSchema.findById(productNumber);
   if (index != "") {
-    ProductSchema.findById(productID)
+    ProductSchema.findOne({ productNumber: productNumber })
       .then((result) => {
+        console.log("ürün bulundu");
         res.send(result);
       })
       .catch((err) => console.log(err));

@@ -1,9 +1,11 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { postProducts } from "../redux/slice/ReduxSlice";
+import { Navigate } from "react-router-dom";
 
 const InputPage = () => {
+  const [submit, setSubmit] = useState(false);
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -12,6 +14,7 @@ const InputPage = () => {
       productGuaranty: "",
       productBuyDate: "",
       productPrice: "",
+      productNumber: "",
     },
     onSubmit: (e) => {
       dispatch(
@@ -21,8 +24,10 @@ const InputPage = () => {
           guaranty: e.productGuaranty,
           price: e.productPrice,
           buyDate: e.productBuyDate,
+          productNumber: e.productNumber,
         })
       );
+      setSubmit(true);
     },
   });
   return (
@@ -66,7 +71,7 @@ const InputPage = () => {
           className="font-medium text-lg text-gray-800"
           htmlFor="productGuaranty"
         >
-          Ürün Garanti Tarihi
+          Ürün Son Garanti Tarihi
         </label>
         <input
           className="px-4 py-2 rounded w-2/3 mb-4 mt-1"
@@ -108,6 +113,22 @@ const InputPage = () => {
             formik.setFieldValue("productImg", e.currentTarget.files[0]);
           }}
         /> */}
+
+        <label
+          className="font-medium text-lg text-gray-800"
+          htmlFor="productNumber"
+        >
+          Ürün Barkod Numarası
+        </label>
+
+        <input
+          className="px-4 py-2 rounded w-2/3 mb-4 mt-1"
+          type="number"
+          name="productNumber"
+          id="productNumber"
+          value={formik.values.productNumber}
+          onChange={formik.handleChange}
+        />
 
         <label
           className="font-medium text-lg text-gray-800"
@@ -163,6 +184,7 @@ const InputPage = () => {
           className="px-4 py-2 mt-4 rounded-md bg-gradient-to-br  from-purple-600 to-blue-500 hover:bg-gradient-to-tl duration-500 ease-in-out text-white focus:ring-blue-300"
           type="submit"
         >
+          {submit ? <Navigate to={"/"} /> : null}
           Ürün Ekle
         </button>
       </form>
